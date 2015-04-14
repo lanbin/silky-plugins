@@ -7,7 +7,8 @@
 exports.silkyPlugin = true;
 
 var fs = require('fs'),
-    path = require('path')
+    path = require('path'),
+    url = require('url')
 
 //注册silky插件
 exports.registerPlugin = function(silky, options) {
@@ -17,7 +18,7 @@ exports.registerPlugin = function(silky, options) {
 
     silky.registerHook('route:willResponse',  function(data, done) {
         
-        if (/\.html$/.test(data.request.url)) {
+        if (/\.html$/.test(url.parse(data.request.url)).pathname) {
 
             var content = data.content,
                 pageName = data.request.url.match(/\/(.*?)\.html/)[1],
